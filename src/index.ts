@@ -34,10 +34,13 @@ io.on("connection", (client) => {
     if (roomids.length == 0) return;
     let roomid = roomids[0].replace("ROOM.", "");
     let idu = uid(128);
-    io.emit("chat", {
+    client.emit("yourchat", idu);
+
+    io.to(roomids[0]).emit("chat", {
       d: data,
       i: idu,
     });
+
     await prismadb.chat.create({
       data: {
         belongsTo: roomid,
