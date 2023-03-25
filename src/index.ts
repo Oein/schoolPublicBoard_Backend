@@ -28,6 +28,13 @@ io.on("connection", (client) => {
     }
     client.emit("room::not_found");
   });
+  client.on("delChat", (data) => {
+    let roomids = [...client.rooms].filter((i) => i.startsWith("ROOM."));
+    console.log([...client.rooms]);
+    if (roomids.length == 0) return;
+    let roomid = roomids[0];
+    io.to(roomid).emit("delChat", data);
+  });
   client.on("chat", async (data) => {
     let roomids = [...client.rooms].filter((i) => i.startsWith("ROOM."));
     console.log([...client.rooms]);
