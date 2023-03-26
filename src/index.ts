@@ -8,7 +8,7 @@ import getSocketioIp from "./socketIp";
 const app = express();
 const io = new Server({
   cors: {
-    origin: "https://wshm.oein.kr",
+    origin: ["https://wshm.oein.kr", "http://localhost:3000"],
     methods: ["GET", "POST"],
     credentials: true,
   },
@@ -16,6 +16,9 @@ const io = new Server({
 
 io.on("connection", (client) => {
   let ip = getSocketioIp(client) || "Unknown";
+  if (ip == "::1") ip = "127.0.0.1";
+  if (ip == "0.0.0.0") ip = "127.0.0.1";
+  if (ip == "localhost") ip = "127.0.0.1";
   client.on("join::room", async (roomid: string) => {
     let dt = await prismadb.post.count({
       where: {
