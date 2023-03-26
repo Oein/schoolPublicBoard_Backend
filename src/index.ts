@@ -7,7 +7,7 @@ import getSocketioIp from "./socketIp";
 
 const app = express();
 const io = new Server({
-  cors: { origin: "*", methods: ["GET", "POST"] },
+  cors: { origin: "*", methods: ["GET", "POST"], credentials: true },
 });
 
 io.on("connection", (client) => {
