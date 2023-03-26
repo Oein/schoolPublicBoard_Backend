@@ -7,7 +7,11 @@ import getSocketioIp from "./socketIp";
 
 const app = express();
 const io = new Server({
-  cors: { origin: "*", methods: ["GET", "POST"], credentials: true },
+  cors: {
+    origin: "https://wshm.oein.kr",
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
 });
 
 io.on("connection", (client) => {
